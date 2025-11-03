@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавить Заявку</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{layout :: header}"></div>
+<div class="container mt-4">
+    <h2>Добавить Новую Заявку</h2>
+    <form th:action="@{/requests/add}" th:object="${request}" method="post">
+        <div class="mb-3">
+            <label for="userName" class="form-label">ФИО</label>
+            <input type="text" th:field="*{userName}" id="userName" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="course" class="form-label">Курс</label>
+            <select th:field="*{course}" id="course" class="form-select" required>
+                <option th:each="course : ${courses}"
+                        th:value="${course.id}"
+                        th:text="${course.name + ' - ' + course.price + ' USD'}">Название Курса - 100 USD</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Телефон</label>
+            <input type="text" th:field="*{phone}" id="phone" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="commentary" class="form-label">Комментарий</label>
+            <textarea th:field="*{commentary}" id="commentary" class="form-control"></textarea>
+        </div>
+
+        <input type="hidden" th:field="*{handled}" th:value="false"/>
+
+        <button type="submit" class="btn btn-success">Добавить заявку</button>
+        <a th:href="@{/requests}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+</body>
+</html>
